@@ -1,1 +1,22 @@
 This is a Test file to check the Poll SCM in Jenkins Pipeline.
+This is to test the Poll SCM Pipeline Script working or not.
+Script :
+----------------------------------------------------------------------------------
+pipeline {
+    agent {
+        node {
+            label 'jenkins-ssh-slave'
+        }
+    }
+    triggers {
+        pollSCM('* * * * *')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/gmk1995/PollScmTest.git']]])
+            }
+        }
+    }
+}
+---------------------------------------------------------------------------------------
